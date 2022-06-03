@@ -7,15 +7,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class Driver {
+public final class Driver {
 
-
+private Driver(){}
     public static void initDriver() {
         WebDriver driver = LocalDriverFactory.getDriver();
         driver.get("https://www.amazon.in");
     }
 
     public static void quitDriver() {
+/*
+ *
+ */
 
 
     }
