@@ -24,7 +24,7 @@ public class RemoteMobileDriverFactory {
     }
 
 
-    private static WebDriver getDriver(MobileRemoteModeType mobileRemoteModeType, MobilePlatformType mobilePlatformType)  {
+    public static WebDriver getDriver(MobileRemoteModeType mobileRemoteModeType, MobilePlatformType mobilePlatformType)  {
 
         return MAP.get(mobileRemoteModeType).apply(mobilePlatformType);
     }

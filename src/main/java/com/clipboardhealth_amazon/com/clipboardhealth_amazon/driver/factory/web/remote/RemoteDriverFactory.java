@@ -22,7 +22,7 @@ public class RemoteDriverFactory {
     }
 
 
-    private static WebDriver getDriver(BrowserRemoteModeType browserRemoteModeType, BrowserType browserType)  {
+    public static WebDriver getDriver(BrowserRemoteModeType browserRemoteModeType, BrowserType browserType)  {
 
         return MAP.get(browserRemoteModeType).apply(browserType);
     }

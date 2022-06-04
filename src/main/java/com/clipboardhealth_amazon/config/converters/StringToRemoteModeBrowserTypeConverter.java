@@ -1,7 +1,6 @@
 package com.clipboardhealth_amazon.config.converters;
 
 import com.clipboardhealth_amazon.enums.BrowserRemoteModeType;
-import com.clipboardhealth_amazon.enums.RunModeBrowserType;
 import org.aeonbits.owner.Converter;
 
 import java.lang.reflect.Method;

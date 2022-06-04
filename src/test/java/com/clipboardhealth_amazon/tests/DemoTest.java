@@ -5,7 +5,7 @@ import com.clipboardhealth_amazon.config.factory.BrowserStackConfigFactory;
 import com.clipboardhealth_amazon.config.factory.ConfigFactory;
 import org.testng.annotations.Test;
 
-public class DemoTest {
+public class DemoTest extends WebBase {
 
 
     @Test
