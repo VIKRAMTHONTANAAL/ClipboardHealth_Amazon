@@ -1,35 +1,31 @@
 package com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory;
 
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.entity.DriverData;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.mobile.local.LocalMobileDriverFactory;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.mobile.remote.RemoteMobileDriverFactory;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.web.local.LocalDriverFactory;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.web.remote.RemoteDriverFactory;
+import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.LocalMobileDriverImpl;
+import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.LocalWebDriverImpl;
+import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.RemoteMobileDriverImpl;
+import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.RemoteWebDriverImpl;
+import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.entity.MobileDriverData;
+import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.entity.WebDriverData;
 import com.clipboardhealth_amazon.enums.RunModeType;
 import org.openqa.selenium.WebDriver;
 
 public final class DriverFactory {
 
-private DriverFactory(){}
-
-    public static WebDriver getDriverForWeb(DriverData driverData) {
-
-        if(driverData.getRunModeType() == RunModeType.LOCAL) {
-            return LocalDriverFactory.getDriver(driverData.getBrowserType());
-        }
-        else {
-            return RemoteDriverFactory.getDriver(driverData.getBrowserRemoteModeType(),driverData.getBrowserType());
-        }
-
+    private DriverFactory() {
     }
-    public static WebDriver getDriverForMobile(DriverData driverData){
 
-        if(driverData.getRunModeType() == RunModeType.LOCAL) {
-            return LocalMobileDriverFactory.getDriver(driverData.getMobilePlatformType());
-        }
-        else {
-            return RemoteMobileDriverFactory.getDriver(driverData.getMobileRemoteModeType(),driverData.getMobilePlatformType());
-        }
+    public static WebDriver getDriverForWeb(WebDriverData webDriverData) {
+        return webDriverData.getRunModeType() == RunModeType.LOCAL
+                ? new LocalWebDriverImpl().getDriver(webDriverData)
+                : new RemoteWebDriverImpl().getDriver(webDriverData);
+    }
+
+    public static WebDriver getDriverForMobile(MobileDriverData mobileDriverData) {
+        return mobileDriverData.getRunModeType() == RunModeType.LOCAL
+                ? new LocalMobileDriverImpl().getDriver(mobileDriverData)
+                : new RemoteMobileDriverImpl().getDriver(mobileDriverData);
     }
 
 }
+
+

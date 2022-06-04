@@ -1,6 +1,7 @@
 package com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver;
 
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.entity.DriverData;
+import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.entity.MobileDriverData;
+import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.entity.WebDriverData;
 import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.DriverFactory;
 import com.clipboardhealth_amazon.enums.MobilePlatformType;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +16,7 @@ public final class Driver {
 
     //local web, remote web, local mobile, remote mobile
     public static void initDriverForWeb() {
-        DriverData driverData =  DriverData.builder()
+        WebDriverData driverData =  WebDriverData.builder()
                 .browserType(getConfig().browser())
                 .browserRemoteModeType(getConfig().browserRemoteMode())
                 .runModeType(getConfig().browserRunMode())
@@ -29,7 +30,7 @@ public final class Driver {
     }
 
     public static void initDriverForMobile() {
-        DriverData driverData =  DriverData.builder()
+        MobileDriverData driverData =  MobileDriverData.builder()
                 .mobilePlatformType(MobilePlatformType.ANDROID)
                 .mobileRemoteModeType(getConfig().mobileRemoteMode())
                 .runModeType(getConfig().mobileRunMode())
