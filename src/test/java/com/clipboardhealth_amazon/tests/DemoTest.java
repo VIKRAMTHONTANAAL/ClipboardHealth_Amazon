@@ -11,7 +11,7 @@ public class DemoTest {
     @Test
     public void testLaunch() {
         System.out.println(BrowserStackConfigFactory.getConfig().browserStackURL());
-
+        System.out.println(ConfigFactory.getConfig().browser());
 
     }
 

@@ -1,6 +1,6 @@
 package com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver;
 
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.web.local.LocalDriverFactory;
+import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.web.local.LocalDriverFactory;
 import com.clipboardhealth_amazon.config.factory.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 

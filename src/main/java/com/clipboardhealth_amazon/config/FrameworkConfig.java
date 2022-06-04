@@ -1,9 +1,9 @@
 package com.clipboardhealth_amazon.config;
 
-import com.clipboardhealth_amazon.config.converters.StringToBrowserTypeConverter;
-import com.clipboardhealth_amazon.config.converters.StringToURLConverter;
+import com.clipboardhealth_amazon.config.converters.*;
 import com.clipboardhealth_amazon.enums.BrowserRemoteModeType;
 import com.clipboardhealth_amazon.enums.BrowserType;
+import com.clipboardhealth_amazon.enums.MobileRemoteModeType;
 import com.clipboardhealth_amazon.enums.RunModeBrowserType;
 import org.aeonbits.owner.Config;
 
@@ -25,13 +25,29 @@ public interface FrameworkConfig extends Config {
 
 
     @Key("runModeBrowser")
+    @ConverterClass(StringToRunModeBrowserTypeConverter.class)
     RunModeBrowserType browserRunMode();
 
     @Key("browserRemoteMode")
+    @ConverterClass(StringToRemoteModeBrowserTypeConverter.class)
     BrowserRemoteModeType browserRemoteMode();
+
+    @Key("mobileRemoteMode")
+    @ConverterClass(StringToMobileRemoteModeTypeConverter.class)
+    MobileRemoteModeType mobileRemoteMode();
+
+    @Key("runModeMobile")
+    @ConverterClass(StringToRunModeBrowserTypeConverter.class)
+    RunModeBrowserType mobileRunMode();
 
     @ConverterClass(StringToURLConverter.class )
     URL seleniumGridURL();
     @ConverterClass(StringToURLConverter.class )
     URL selenoidURL();
+
+    @ConverterClass(StringToURLConverter.class )
+    @DefaultValue("https://127.0.0.1:4723/wd/hub")
+    URL localAppiumServerURL();
+
+
 }
