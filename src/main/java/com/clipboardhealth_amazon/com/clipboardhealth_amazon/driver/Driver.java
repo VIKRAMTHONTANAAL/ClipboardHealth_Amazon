@@ -14,39 +14,27 @@ public final class Driver {
     private Driver() {
     }
 
+
+
     //local web, remote web, local mobile, remote mobile
     public static void initDriverForWeb() {
-        WebDriverData driverData =  WebDriverData.builder()
-                .browserType(getConfig().browser())
-                .browserRemoteModeType(getConfig().browserRemoteMode())
-                .runModeType(getConfig().browserRunMode())
-                .build();
-
-        WebDriver driver = DriverFactory.getDriverForWeb(driverData);
-        driver.quit();
+        WebDriverData webDriverData = new WebDriverData(getConfig().browser(), getConfig().browserRemoteMode());
+        WebDriver driver = DriverFactory.getDriverForWeb(getConfig().browserRunMode()).getDriver(webDriverData);
+        DriverManager.setDriver(driver);
 
         //  driver.get("https://www.amazon.in");
 
     }
 
     public static void initDriverForMobile() {
-        MobileDriverData driverData =  MobileDriverData.builder()
-                .mobilePlatformType(MobilePlatformType.ANDROID)
-                .mobileRemoteModeType(getConfig().mobileRemoteMode())
-                .runModeType(getConfig().mobileRunMode())
-                .build();
-
-        WebDriver driver = DriverFactory.getDriverForMobile(driverData);
-        driver.quit();
-
+        MobileDriverData mobileDriverData = new MobileDriverData((MobilePlatformType.ANDROID), getConfig().mobileRemoteMode());
+        WebDriver driver = DriverFactory.getDriverForMobile(getConfig().mobileRunMode()).getDriver(mobileDriverData);
         //  driver.get("https://www.amazon.in");
-
+        DriverManager.setDriver(driver);
     }
 
     public static void quitDriver() {
-        /*
-         *
-         */
+        DriverManager.getDriver().quit();
 
     }
 }
