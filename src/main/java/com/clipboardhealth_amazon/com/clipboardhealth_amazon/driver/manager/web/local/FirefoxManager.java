@@ -1,4 +1,4 @@
-package com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager;
+package com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.web.local;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
