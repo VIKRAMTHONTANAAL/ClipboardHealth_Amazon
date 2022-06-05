@@ -6,6 +6,8 @@ import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.Driv
 import com.clipboardhealth_amazon.enums.MobilePlatformType;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Objects;
+
 import static com.clipboardhealth_amazon.config.factory.ConfigFactory.getConfig;
 
 
@@ -18,23 +20,40 @@ public final class Driver {
 
     //local web, remote web, local mobile, remote mobile
     public static void initDriverForWeb() {
-        WebDriverData webDriverData = new WebDriverData(getConfig().browser(), getConfig().browserRemoteMode());
-        WebDriver driver = DriverFactory.getDriverForWeb(getConfig().browserRunMode()).getDriver(webDriverData);
-        DriverManager.setDriver(driver);
 
+        if(Objects.isNull(DriverManager.getDriver())) {
+
+            WebDriverData webDriverData = new WebDriverData(getConfig().browser(), getConfig().browserRemoteMode());
+            WebDriver driver = DriverFactory.getDriverForWeb(getConfig().browserRunMode()).getDriver(webDriverData);
+            DriverManager.setDriver(driver);
+            loadURL();
+            maximizeBrowserWindow();
+        }
         //  driver.get("https://www.amazon.in");
 
+    }
+
+    public static void loadURL(){
+        DriverManager.getDriver().get(getConfig().Url());
+    }
+
+    public static void maximizeBrowserWindow(){
+        DriverManager.getDriver().manage().window().maximize();
     }
 
     public static void initDriverForMobile() {
-        MobileDriverData mobileDriverData = new MobileDriverData((MobilePlatformType.ANDROID), getConfig().mobileRemoteMode());
-        WebDriver driver = DriverFactory.getDriverForMobile(getConfig().mobileRunMode()).getDriver(mobileDriverData);
-        //  driver.get("https://www.amazon.in");
-        DriverManager.setDriver(driver);
+        if(Objects.isNull(DriverManager.getDriver())) {
+            MobileDriverData mobileDriverData = new MobileDriverData((MobilePlatformType.IOS), getConfig().mobileRemoteMode());
+            WebDriver driver = DriverFactory.getDriverForMobile(getConfig().mobileRunMode()).getDriver(mobileDriverData);
+            //  driver.get("https://www.amazon.in");
+            DriverManager.setDriver(driver);
+        }
     }
 
     public static void quitDriver() {
-        DriverManager.getDriver().quit();
-
+        if(Objects.nonNull(DriverManager.getDriver())) {
+            DriverManager.getDriver().quit();
+            DriverManager.unload();
+        }
     }
 }

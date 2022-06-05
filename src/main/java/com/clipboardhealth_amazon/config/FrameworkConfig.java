@@ -8,6 +8,7 @@ import com.clipboardhealth_amazon.enums.RunModeType;
 import org.aeonbits.owner.Config;
 
 
+
 import java.net.URL;
 
 
@@ -15,9 +16,16 @@ import java.net.URL;
 @Config.Sources({
         "system:properties",
         "system:env",
-        "file:${user.dir}/src/test/resources/config.properties"
+        "file:${user.dir}/src/test/resources/config.properties",
+        "file:${user.dir}/src/test/resources/prod-config.properties"
 })
 public interface FrameworkConfig extends Config {
+    @DefaultValue("staging")
+    String environment();
+
+    @Key("${environment}.Url")
+    @DefaultValue("https://www.amazon.in")
+    String Url();
 
     @DefaultValue("Chrome")
     @ConverterClass(StringToBrowserTypeConverter.class)
@@ -40,14 +48,16 @@ public interface FrameworkConfig extends Config {
     @ConverterClass(StringToRunModeBrowserTypeConverter.class)
     RunModeType mobileRunMode();
 
-    @ConverterClass(StringToURLConverter.class )
+    @ConverterClass(StringToURLConverter.class)
     URL seleniumGridURL();
-    @ConverterClass(StringToURLConverter.class )
+
+    @ConverterClass(StringToURLConverter.class)
     URL selenoidURL();
 
-    @ConverterClass(StringToURLConverter.class )
+    @ConverterClass(StringToURLConverter.class)
     @DefaultValue("http://127.0.0.1:4723/wd/hub")
     URL localAppiumServerURL();
+
 
 
 }
