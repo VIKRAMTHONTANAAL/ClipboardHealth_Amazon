@@ -1,7 +1,10 @@
 package com.clipboardhealth_amazon.utils;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.DriverManager;
-import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,57 +12,59 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 
 
-@Log4j2
 public class PageActionsHelper {
 
-    private PageActionsHelper(){}
 
-    static int waitTime=30;
+    private PageActionsHelper() {
+    }
+
+    static int waitTime = 30;
+    static ExtentTest test;
+    static ExtentReports extent;
 
 
-    public static void click(By by){
+
+    public static void click(By by) {
         if (!isElementVisible(by))
-            throw new RuntimeException("Unable to locate the element even after waiting for " +waitTime + " seconds");
+            throw new RuntimeException("Unable to locate the element even after waiting for " + waitTime + " seconds");
         try {
             DriverManager.getDriver().findElement(by).click();
-            log.info("Clicking on element");
-        }
-        catch (Exception e){
-            log.error("failed to click on element: {}", e.getMessage());
-            log.debug("caught {}", e);
+            test.pass("Clicking on element "+by,MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+        } catch (Exception e) {
+            test.fail("Clicking on element "+by, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
-    public static void sendKeys(By by, String value){
+    public static void sendKeys(By by, String value) {
         if (!isElementVisible(by))
-            throw new RuntimeException("Unable to locate the element even after waiting for " +waitTime + " seconds");
+            throw new RuntimeException("Unable to locate the element even after waiting for " + waitTime + " seconds");
         try {
             DriverManager.getDriver().findElement(by).sendKeys(value);
-            log.info("Input " + value + " in element");
-        }
-        catch (Exception e){
-            log.error("failed to input "+value+" in element: {}", e.getMessage());
-            log.debug("caught {}", e);
+            test.pass("Input " + value + " in element");
+        } catch (Exception e) {
+            test.fail("failed to input " + value + " in element: {}",MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
-    public static String getPageTitle(){
+    public static String getPageTitle() {
         waitForPageLoad();
-        return   DriverManager.getDriver().getTitle();
+        return DriverManager.getDriver().getTitle();
     }
 
-    public static String getTextFromElement(By by){
-        return   DriverManager.getDriver().findElement(by).getText();
+    public static String getTextFromElement(By by) {
+        test.pass("Text:///// " + DriverManager.getDriver().findElement(by).getText() + "//// in element");
+        return DriverManager.getDriver().findElement(by).getText();
     }
 
     public static boolean isElementVisible(By by) {
         try {
-            new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(waitTime))
-                    .until(ExpectedConditions.visibilityOfElementLocated(by));
+            new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(waitTime)).until(ExpectedConditions.visibilityOfElementLocated(by));
             return true;
         } catch (TimeoutException ex) {
             return false;
@@ -79,56 +84,40 @@ public class PageActionsHelper {
         }
     }
 
-    public static void selectFromDropDownByValue(By by, String value)
-    {
-        try
-        {
-            WebElement element=DriverManager.getDriver().findElement(by);
-            log.info("selecting from dropdown by value {}", value);
+    public static void selectFromDropDownByValue(By by, String value) {
+        try {
+            WebElement element = DriverManager.getDriver().findElement(by);
+
             Select select = new Select(element);
             select.selectByValue(value);
-            log.info("selected from dropdown by value {}", value);
-        } catch (Exception e)
-        {
-            log.error("failed to select from dropdown by value {} : {}", value, e.getMessage());
-            log.debug("caught {}", e);
+            test.pass("selected from dropdown by value {}");
+        } catch (Exception e) {
+            test.fail("failed to select from dropdown by value {} : {}",MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
-    public static void clickOnElementUsingJs(By by)
-    {
-        try
-        {
-            WebElement element=DriverManager.getDriver().findElement(by);
-            log.info("clicking on element using javascript");
-            ((JavascriptExecutor)DriverManager.getDriver()).executeScript("arguments[0].click();",element);
-            log.info("clicked on element using javascript");
-        } catch (Exception e)
-        {
-            log.error("failed to click on element using javascript: {}", e.getMessage());
-            log.debug("caught {}", e);
+    public static void clickOnElementUsingJs(By by) {
+        try {
+            WebElement element = DriverManager.getDriver().findElement(by);
+            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].click();", element);
+            test.pass("clicked on element using javascript");
+        } catch (Exception e) {
+            test.fail("failed to click on element using javascript: {}",MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
-    public static void switchToSucceedingWindow(Integer iterations)
-    {
-        try
-        {
-            for (int i=0; i<iterations; i++)
-            {
+    public static void switchToSucceedingWindow(Integer iterations) {
+        try {
+            for (int i = 0; i < iterations; i++) {
                 String handlePointer = "";
-                log.info("switching to succeeding window");
                 ArrayList<String> windowHandles = new ArrayList<>(DriverManager.getDriver().getWindowHandles());
                 String handle = DriverManager.getDriver().getWindowHandle();
                 int windowHandlesSize = windowHandles.size();
-                for (int k = 0; k < windowHandlesSize; k++)
-                {
+                for (int k = 0; k < windowHandlesSize; k++) {
                     handlePointer = windowHandles.get(k);
-                    if (handlePointer.equals(handle))
-                    {
+                    if (handlePointer.equals(handle)) {
                         //If the last window is selected and to loop around the window, below condition suffice
-                        if (k == (windowHandlesSize - 1))
-                        {
+                        if (k == (windowHandlesSize - 1)) {
                             handlePointer = windowHandles.get(0);
                             break;
                         }
@@ -139,16 +128,36 @@ public class PageActionsHelper {
                 }
                 //Switch to previous (or preceding) tab
                 DriverManager.getDriver().switchTo().window(handlePointer);
-                log.info("switched to succeeding window");
+                test.pass("switched to succeeding window");
+
             }
 
-        }
-        catch (Exception e)
-        {
-            log.error("failed to switch to succeeding window {}", e.getMessage());
-            log.debug("caught {}", e);
+        } catch (Exception e) {
+            test.fail("failed to switch to succeeding window {}",MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build()    );
 
         }
+    }
+
+    public static void setExtentReporter_TestCaseName(String testCaseName){
+        extent=new ExtentReports();
+        ExtentSparkReporter spark = new ExtentSparkReporter(testCaseName+".html");
+        final File CONF = new File("extent-config.json");
+        try {
+            spark.loadJSONConfig(CONF);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        extent.attachReporter(spark);
+
+        test=extent.createTest(testCaseName);
+    }
+
+    public static void endReport(){
+        extent.flush();
+    }
+
+    public static String getBase64(){
+        return ((TakesScreenshot)DriverManager.getDriver()).getScreenshotAs(OutputType.BASE64);
     }
 
 

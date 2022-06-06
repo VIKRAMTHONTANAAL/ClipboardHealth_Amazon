@@ -30,7 +30,6 @@ public final class Driver {
             loadURL();
             maximizeBrowserWindow();
         }
-        //  driver.get("https://www.amazon.in");
 
     }
 
