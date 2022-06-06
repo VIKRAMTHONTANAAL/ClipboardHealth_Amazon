@@ -6,6 +6,7 @@ import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.Driv
 import com.clipboardhealth_amazon.enums.MobilePlatformType;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import static com.clipboardhealth_amazon.config.factory.ConfigFactory.getConfig;
@@ -34,6 +35,9 @@ public final class Driver {
     }
 
     public static void loadURL(){
+        DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        DriverManager.getDriver().manage().timeouts().scriptTimeout(Duration.ofSeconds(30));
+        DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
         DriverManager.getDriver().get(getConfig().Url());
     }
 

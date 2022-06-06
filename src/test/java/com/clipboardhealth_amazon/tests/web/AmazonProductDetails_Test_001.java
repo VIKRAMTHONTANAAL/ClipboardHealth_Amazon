@@ -9,7 +9,7 @@ import com.clipboardhealth_amazon.pages.enums.sortbycomponent.SortType;
 import com.clipboardhealth_amazon.tests.web.base.WebBase;
 import org.testng.annotations.Test;
 
-public class AmazonProductDetails_Test extends WebBase {
+public class AmazonProductDetails_Test_001 extends WebBase {
 
 
     @Test
