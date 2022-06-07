@@ -1,6 +1,5 @@
 package com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.mobile.remote;
 
-import com.clipboardhealth_amazon.enums.BrowserRemoteModeType;
 import com.clipboardhealth_amazon.enums.MobilePlatformType;
 import com.clipboardhealth_amazon.enums.MobileRemoteModeType;
 import org.openqa.selenium.WebDriver;

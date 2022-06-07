@@ -1,9 +1,6 @@
 package com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.mobile.remote;
 import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.mobile.remote.BrowserStackAndroidManager;
 import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.mobile.remote.BrowserStackIosManager;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.web.remote.browserstack.BrowserStackChromeManager;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.web.remote.browserstack.BrowserStackFirefoxManager;
-import com.clipboardhealth_amazon.enums.BrowserType;
 import com.clipboardhealth_amazon.enums.MobilePlatformType;
 import org.openqa.selenium.WebDriver;
 

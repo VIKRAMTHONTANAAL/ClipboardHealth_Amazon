@@ -3,8 +3,6 @@ import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.web.
 import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.web.remote.selenium.SeleniumGridFirefoxManager;
 import com.clipboardhealth_amazon.enums.BrowserType;
 import org.openqa.selenium.WebDriver;
-
-import java.net.MalformedURLException;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;

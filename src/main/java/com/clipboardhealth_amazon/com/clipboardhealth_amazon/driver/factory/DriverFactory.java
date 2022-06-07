@@ -1,11 +1,6 @@
 package com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory;
-
 import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.*;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.entity.MobileDriverData;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.entity.WebDriverData;
 import com.clipboardhealth_amazon.enums.RunModeType;
-import org.openqa.selenium.WebDriver;
-
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;

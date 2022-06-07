@@ -1,8 +1,6 @@
 package com.clipboardhealth_amazon.tests.web.base;
 
 import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.Driver;
-
-import com.clipboardhealth_amazon.utils.PageActionsHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 

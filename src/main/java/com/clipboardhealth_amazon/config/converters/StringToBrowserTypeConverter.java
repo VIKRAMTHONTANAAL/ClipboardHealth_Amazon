@@ -2,7 +2,6 @@ package com.clipboardhealth_amazon.config.converters;
 
 import com.clipboardhealth_amazon.enums.BrowserType;
 import org.aeonbits.owner.Converter;
-
 import java.lang.reflect.Method;
 import java.util.Map;
 

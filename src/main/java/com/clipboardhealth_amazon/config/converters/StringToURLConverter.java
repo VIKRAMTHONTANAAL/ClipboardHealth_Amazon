@@ -3,7 +3,6 @@ package com.clipboardhealth_amazon.config.converters;
 
 import lombok.SneakyThrows;
 import org.aeonbits.owner.Converter;
-
 import java.lang.reflect.Method;
 import java.net.URL;
 

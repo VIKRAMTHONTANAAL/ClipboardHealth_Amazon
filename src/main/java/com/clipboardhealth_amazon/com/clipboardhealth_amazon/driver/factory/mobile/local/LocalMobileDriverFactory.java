@@ -2,9 +2,6 @@ package com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.factory.mob
 
 import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.mobile.local.AndroidManager;
 import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.mobile.local.IosManager;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.web.local.ChromeManager;
-import com.clipboardhealth_amazon.com.clipboardhealth_amazon.driver.manager.web.local.FirefoxManager;
-import com.clipboardhealth_amazon.enums.BrowserType;
 import com.clipboardhealth_amazon.enums.MobilePlatformType;
 import org.openqa.selenium.WebDriver;
 
