@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="/Users/thonthanaalvikram/Projects/ClipboardHealth_Amazon/src/test/java/com/clipboardhealth_amazon/tests/web/AmazonProductDetails_Test_001.java">
-    <classes>
-    <class name="com.clipboardhealth_amazon.tests.web.AmazonProductDetails_Test_001"><methods>
-        <include name="testLaunch"/></methods>
-    </class>
-</classes>
-</test>
-    <test verbose="2" preserve-order="true" name="/Users/thonthanaalvikram/Projects/ClipboardHealth_Amazon/src/test/java/com/clipboardhealth_amazon/tests/web/AmazonProductDetails_Test_002.java">
+    <test verbose="2" name="/Users/thonthanaalvikram/Projects/ClipboardHealth_Amazon/src/test/java/com/clipboardhealth/amazon/tests/web/AmazonProductDetailsTest.java">
         <classes>
-            <class name="com.clipboardhealth_amazon.tests.web.AmazonProductDetails_Test_002"><methods>
-                <include name="testLaunch"/></methods>
+            <class name="com.clipboardhealth.amazon.tests.web.AmazonProductDetailsTest">
+                <methods><include name="testLaunch"/>
+                </methods>
             </class>
         </classes>
     </test>
