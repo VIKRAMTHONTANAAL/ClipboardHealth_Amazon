@@ -1,28 +1,30 @@
-# ClipboardHealth_Amazon
+
+# ClipboardHealth_Amazon 
+
 Single Automation framework to automate web, mobile and api
 
-Features:
 
-Factory Design Pattern
-Dockerization
-Supports Web, Mobile, Local and Remote Executions
-HTML Reports with Base64 Screencapture
-Page Object Model (POM)
+## Features
 
-How to start?
+- Factory Design Pattern
+- Dockerization
+- Supports Web, Mobile, Local and Remote Executions
+- HTML Reports with Base64 Screencapture
+- Page Object Model (POM)
+
+
+## Prerequisites
+
 Clone the repository and below are few dependencies which are required for the project to run:
-
-Maven 3.8.1 or greater (preferably Maven 3.8.1)
-
-Java 8 or 11 or higher (preferably Java 11)
-
-Docker latest
-
-Step by step actions
+- Maven 3.8.1 or greater (preferably Maven 3.8.1)
+- Java 8 or 11 or higher (preferably Java 11)
+- Docker latest
+## Installation
 
 Required dependencies:
 
-      <dependencies>
+```bash
+<dependencies>
         <!-- https://mvnrepository.com/artifact/com.machinezoo.noexception/noexception -->
         <dependency>
             <groupId>com.machinezoo.noexception</groupId>
@@ -100,9 +102,12 @@ Required dependencies:
             <version>${javafaker.version}</version>
         </dependency>
     </dependencies>
+```
+
 Jar dependencies version:
 
-  <maven.compiler.source>11</maven.compiler.source>
+```bash
+<maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <owner.version>1.0.12</owner.version>
         <appium.java.version>8.0.0</appium.java.version>
@@ -118,18 +123,20 @@ Jar dependencies version:
         <javafaker.version>1.0.2</javafaker.version>
         <awaitility.version>4.2.0</awaitility.version>
         <noexception.version>1.8.0</noexception.version>
+```
 
-To Run the project
-To see the output, just run below command and make sure that all prerequisites with regards to dependencies are completed
+To see the output, just run below command in the root project directory and make sure that all prerequisites with regards to dependencies are completed
 
-mvn dependency:resolve
--AND-
-mvn install
--OR-
-mvn package
+```bash
+ mvn dependency:resolve 
+ -AND- 
+ mvn install
+ -OR- 
+ mvn package
+```
 
-Creating a docker image
-The above command builds image for the dockerfile specified in the root project directory
+Creating a docker image The above command builds image for the dockerfile specified in the root project directory
 
+```bash
 docker build -t mydockerimage .
-
+```
