@@ -1,24 +1,24 @@
-# ClipboardHealth_Amazon
+**# ClipboardHealth_Amazon**
 Single Automation framework to automate web, mobile and api
 
-Features:
+**Features:**
 
-Factory Design Pattern
-Dockerization
-Supports Web, Mobile, Local and Remote Executions
-HTML Reports with Base64 Screencapture
-Page Object Model (POM)
+#Factory Design Pattern
+#Dockerization
+#Supports Web, Mobile, Local and Remote Executions
+#HTML Reports with Base64 Screencapture
+#Page Object Model (POM)
 
-How to start?
+**How to start?**
 Clone the repository and below are few dependencies which are required for the project to run:
 
-Maven 3.8.1 or greater (preferably Maven 3.8.1)
+#Maven 3.8.1 or greater (preferably Maven 3.8.1)
 
-Java 8 or 11 or higher (preferably Java 11)
+#Java 8 or 11 or higher (preferably Java 11)
 
-Docker latest
+#Docker latest
 
-Step by step actions
+**Step by step actions:**
 
 Required dependencies:
 
@@ -119,7 +119,7 @@ Jar dependencies version:
         <awaitility.version>4.2.0</awaitility.version>
         <noexception.version>1.8.0</noexception.version>
 
-To Run the project
+**To Run the project**
 To see the output, just run below command and make sure that all prerequisites with regards to dependencies are completed
 
 mvn dependency:resolve
@@ -128,7 +128,7 @@ mvn install
 -OR-
 mvn package
 
-Creating a docker image
+**Creating a docker image**
 The above command builds image for the dockerfile specified in the root project directory
 
 docker build -t mydockerimage .
