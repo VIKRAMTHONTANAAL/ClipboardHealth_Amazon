@@ -11,7 +11,7 @@ public class WebBase {
     @BeforeMethod
     public void setUp(){
         Driver.initDriverForWeb();
-        PageActionsHelper.setExtentReporter_TestCaseName(this.toString());
+        PageActionsHelper.setExtentReporterTestCaseName(this.toString());
 
     }
 

@@ -7,6 +7,7 @@ Single Automation framework to automate web, mobile and api
 ## Features
 
 - Factory Design Pattern
+- Parallel Test Execution
 - Dockerization
 - Supports Web, Mobile, Local and Remote Executions
 - HTML Reports with Base64 Screen capture
