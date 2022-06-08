@@ -12,6 +12,10 @@ import static java.lang.ThreadLocal.withInitial;
 
 public final class DriverManager {
 
+    private DriverManager(){
+
+    }
+
     private static final ThreadLocal<WebDriver> WEBDRIVERTHREADLOCAL = new ThreadLocal<>();
     private static final ThreadLocal<WebDriver> MOBILEDRIVERTHREADLOCAL = new ThreadLocal<>();
 

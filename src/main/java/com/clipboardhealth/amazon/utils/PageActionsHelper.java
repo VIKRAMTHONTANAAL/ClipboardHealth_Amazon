@@ -24,20 +24,45 @@ public class PageActionsHelper {
     private PageActionsHelper() {
     }
 
+    private static ThreadLocal<ExtentTest> extest = new ThreadLocal<>();
+
+    private static ThreadLocal<ExtentReports> exreports = new ThreadLocal<>();
     static int waitTime = 30;
     static ExtentTest test;
     static ExtentReports extent;
 
+    public static void setTest(ExtentTest extentTest) {
+        extest.set(extentTest);
 
+    }
+    public static void setReport(ExtentReports extentReports) {
+        exreports.set(extentReports);
+    }
+
+    public static ExtentTest getTest(){
+        return extest.get();
+    }
+
+    public static ExtentReports getReports(){
+        return exreports.get();
+    }
+
+    public static void unloadTest(){
+        extest.remove();
+    }
+
+    public static void unloadReports(){
+        exreports.remove();
+    }
 
     public static void click(By by) {
         if (!isElementVisible(by))
             throw new RuntimeException("Unable to locate the element even after waiting for " + waitTime + " seconds");
         try {
             DriverManager.getDriver().findElement(by).click();
-            test.pass("Clicking on element "+by,MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            extest.get().pass("Clicking on element " + by, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         } catch (Exception e) {
-            test.fail("Clicking on element "+by, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            extest.get().fail("Clicking on element " + by, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
@@ -46,9 +71,9 @@ public class PageActionsHelper {
             throw new RuntimeException("Unable to locate the element even after waiting for " + waitTime + " seconds");
         try {
             DriverManager.getDriver().findElement(by).sendKeys(value);
-            test.pass("Input " + value + " in element");
+            extest.get().pass("Input " + value + " in element");
         } catch (Exception e) {
-            test.fail("failed to input " + value + " in element: {}",MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            extest.get().fail("failed to input " + value + " in element: {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
@@ -58,7 +83,7 @@ public class PageActionsHelper {
     }
 
     public static String getTextFromElement(By by) {
-        test.pass("Text:///// " + DriverManager.getDriver().findElement(by).getText() + "//// in element");
+        extest.get().pass("Text:///// " + DriverManager.getDriver().findElement(by).getText() + "//// in element");
         return DriverManager.getDriver().findElement(by).getText();
     }
 
@@ -78,7 +103,7 @@ public class PageActionsHelper {
                 Thread.sleep(3000);
                 WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(waitTime));
                 wait.until(expectation);
-            } catch (Throwable error) {
+            } catch (Exception e) {
                 Assert.fail("Timeout waiting for Page Load Request to complete.");
             }
         }
@@ -90,9 +115,9 @@ public class PageActionsHelper {
 
             Select select = new Select(element);
             select.selectByValue(value);
-            test.pass("selected from dropdown by value {}");
+            extest.get().pass("selected from dropdown by value {}");
         } catch (Exception e) {
-            test.fail("failed to select from dropdown by value {} : {}",MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            extest.get().fail("failed to select from dropdown by value {} : {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
@@ -100,9 +125,9 @@ public class PageActionsHelper {
         try {
             WebElement element = DriverManager.getDriver().findElement(by);
             ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].click();", element);
-            test.pass("clicked on element using javascript",MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            extest.get().pass("clicked on element using javascript", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         } catch (Exception e) {
-            test.fail("failed to click on element using javascript: {}",MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            extest.get().fail("failed to click on element using javascript: {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
@@ -128,36 +153,39 @@ public class PageActionsHelper {
                 }
                 //Switch to previous (or preceding) tab
                 DriverManager.getDriver().switchTo().window(handlePointer);
-                test.pass("switched to succeeding window");
+                extest.get().pass("switched to succeeding window");
 
             }
 
         } catch (Exception e) {
-            test.fail("failed to switch to succeeding window {}",MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build()    );
+            extest.get().fail("failed to switch to succeeding window {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
 
         }
     }
 
-    public static void setExtentReporter_TestCaseName(String testCaseName){
-        extent=new ExtentReports();
-        ExtentSparkReporter spark = new ExtentSparkReporter(testCaseName+".html");
-        final File CONF = new File("extent-config.json");
+    public static void setExtentReporterTestCaseName(String testCaseName) {
+        extent = new ExtentReports();
+        setReport(extent);
+        ExtentSparkReporter spark = new ExtentSparkReporter(testCaseName + ".html");
+        final File conf = new File("extent-config.json");
         try {
-            spark.loadJSONConfig(CONF);
+            spark.loadJSONConfig(conf);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         extent.attachReporter(spark);
-
-        test=extent.createTest(testCaseName);
+        test = extent.createTest(testCaseName);
+        setTest(test);
     }
 
-    public static void endReport(){
-        extent.flush();
+    public static void endReport() {
+        exreports.get().flush();
+        unloadReports();
+        unloadTest();
     }
 
-    public static String getBase64(){
-        return ((TakesScreenshot)DriverManager.getDriver()).getScreenshotAs(OutputType.BASE64);
+    public static String getBase64() {
+        return ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BASE64);
     }
 
 
