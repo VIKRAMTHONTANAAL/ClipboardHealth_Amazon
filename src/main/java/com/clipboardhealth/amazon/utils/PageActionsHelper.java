@@ -17,52 +17,28 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 
+import static com.clipboardhealth.amazon.utils.PageActionManager.setReport;
 
-public class PageActionsHelper {
+
+public final class PageActionsHelper {
 
 
     private PageActionsHelper() {
     }
 
-    private static ThreadLocal<ExtentTest> extest = new ThreadLocal<>();
 
-    private static ThreadLocal<ExtentReports> exreports = new ThreadLocal<>();
     static int waitTime = 30;
     static ExtentTest test;
     static ExtentReports extent;
-
-    public static void setTest(ExtentTest extentTest) {
-        extest.set(extentTest);
-
-    }
-    public static void setReport(ExtentReports extentReports) {
-        exreports.set(extentReports);
-    }
-
-    public static ExtentTest getTest(){
-        return extest.get();
-    }
-
-    public static ExtentReports getReports(){
-        return exreports.get();
-    }
-
-    public static void unloadTest(){
-        extest.remove();
-    }
-
-    public static void unloadReports(){
-        exreports.remove();
-    }
 
     public static void click(By by) {
         if (!isElementVisible(by))
             throw new RuntimeException("Unable to locate the element even after waiting for " + waitTime + " seconds");
         try {
             DriverManager.getDriver().findElement(by).click();
-            extest.get().pass("Clicking on element " + by, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            PageActionManager.getTest().pass("Clicking on element " + by, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         } catch (Exception e) {
-            extest.get().fail("Clicking on element " + by, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            PageActionManager.getTest().fail("Clicking on element " + by, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
@@ -71,9 +47,9 @@ public class PageActionsHelper {
             throw new RuntimeException("Unable to locate the element even after waiting for " + waitTime + " seconds");
         try {
             DriverManager.getDriver().findElement(by).sendKeys(value);
-            extest.get().pass("Input " + value + " in element");
+            PageActionManager.getTest().pass("Input " + value + " in element");
         } catch (Exception e) {
-            extest.get().fail("failed to input " + value + " in element: {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            PageActionManager.getTest().fail("failed to input " + value + " in element: {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
@@ -83,7 +59,7 @@ public class PageActionsHelper {
     }
 
     public static String getTextFromElement(By by) {
-        extest.get().pass("Text:///// " + DriverManager.getDriver().findElement(by).getText() + "//// in element");
+        PageActionManager.getTest().pass("Text:///// " + DriverManager.getDriver().findElement(by).getText() + "//// in element");
         return DriverManager.getDriver().findElement(by).getText();
     }
 
@@ -115,9 +91,9 @@ public class PageActionsHelper {
 
             Select select = new Select(element);
             select.selectByValue(value);
-            extest.get().pass("selected from dropdown by value {}");
+            PageActionManager.getTest().pass("selected from dropdown by value {}");
         } catch (Exception e) {
-            extest.get().fail("failed to select from dropdown by value {} : {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            PageActionManager.getTest().fail("failed to select from dropdown by value {} : {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
@@ -125,9 +101,9 @@ public class PageActionsHelper {
         try {
             WebElement element = DriverManager.getDriver().findElement(by);
             ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].click();", element);
-            extest.get().pass("clicked on element using javascript", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            PageActionManager.getTest().pass("clicked on element using javascript", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         } catch (Exception e) {
-            extest.get().fail("failed to click on element using javascript: {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            PageActionManager.getTest().fail("failed to click on element using javascript: {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
         }
     }
 
@@ -153,12 +129,12 @@ public class PageActionsHelper {
                 }
                 //Switch to previous (or preceding) tab
                 DriverManager.getDriver().switchTo().window(handlePointer);
-                extest.get().pass("switched to succeeding window");
+                PageActionManager.getTest().pass("switched to succeeding window");
 
             }
 
         } catch (Exception e) {
-            extest.get().fail("failed to switch to succeeding window {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
+            PageActionManager.getTest().fail("failed to switch to succeeding window {}", MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64()).build());
 
         }
     }
@@ -175,13 +151,13 @@ public class PageActionsHelper {
         }
         extent.attachReporter(spark);
         test = extent.createTest(testCaseName);
-        setTest(test);
+        PageActionManager.setTest(test);
     }
 
     public static void endReport() {
-        exreports.get().flush();
-        unloadReports();
-        unloadTest();
+        PageActionManager.getReports().flush();
+        PageActionManager.unloadReports();
+        PageActionManager.unloadTest();
     }
 
     public static String getBase64() {
