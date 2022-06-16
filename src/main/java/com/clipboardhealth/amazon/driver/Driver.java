@@ -34,7 +34,6 @@ public final class Driver {
     }
 
     public static void loadURL(){
-        DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         DriverManager.getDriver().manage().timeouts().scriptTimeout(Duration.ofSeconds(30));
         DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
         DriverManager.getDriver().get(getConfig().Url());

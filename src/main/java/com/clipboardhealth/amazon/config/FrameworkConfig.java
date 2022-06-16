@@ -17,7 +17,8 @@ import java.net.URL;
         "system:properties",
         "system:env",
         "file:${user.dir}/src/test/resources/config.properties",
-        "file:${user.dir}/src/test/resources/prod-config.properties"
+        "file:${user.dir}/src/test/resources/prod-config.properties",
+        "file:${user.dir}/src/test/resources/qa-config.properties"
 })
 public interface FrameworkConfig extends Config {
     @DefaultValue("staging")

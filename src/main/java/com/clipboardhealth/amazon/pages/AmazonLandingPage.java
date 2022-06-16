@@ -7,9 +7,6 @@ import com.clipboardhealth.amazon.utils.PageActionsHelper;
 import com.clipboardhealth.amazon.pages.enums.hamburgermenucomponent.MenuType;
 import com.clipboardhealth.amazon.pages.enums.hamburgermenucomponent.SubMenuType;
 import org.openqa.selenium.By;
-import org.testng.Assert;
-
-import java.util.Objects;
 
 
 public class AmazonLandingPage {
@@ -26,7 +23,7 @@ public class AmazonLandingPage {
 
 
     public AmazonLandingPage verifyAmazonLandingPageTitle(){
-        Assert.assertTrue(Objects.requireNonNull(PageActionsHelper.getPageTitle()).contains(LANDINGPAGETITLE), LANDINGPAGETITLE +" not present in field");
+        PageActionsHelper.getPageTitle().equals(LANDINGPAGETITLE);
         return this;
     }
 
